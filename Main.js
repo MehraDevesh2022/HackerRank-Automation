@@ -37,6 +37,7 @@ browserWillbeLauncedPromise
   
   .then(() => {
     // password typed with page instance . using attribute selector
+    // type() method used for type the text on text filed
     let passwordWillBeTypedPromise = page.type(
       "input[id ='input-2']",
       password,
@@ -46,14 +47,15 @@ browserWillbeLauncedPromise
   })
   .then(() => {
     // rember me marker clicked persented in page tab
-    let rememberMeWillBeClickPromise = page.click(".checkbox-input");
+    let rememberMeWillBeClickPromise = page.click(".checkbox-input" {delay : 80});
     return rememberMeWillBeClickPromise;
   })
   .then(() => {
     // log in button clicked using page instance and attribute selector
+    // click()  method used for click  the target area
     let loginButtonWillClicked = page.click(
       'button[data-analytics="LoginPassword"]'
-    );
+     , {delay : 50});
   });
 
 console.log("after");
