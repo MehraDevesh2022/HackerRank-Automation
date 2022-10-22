@@ -14,29 +14,38 @@ let browserWillbeLauncedPromise = puppeteer.launch({
 browserWillbeLauncedPromise
   .then(function (brwoserInstance) {
     let newTabPromise = brwoserInstance.newPage();
-     
+
     // newTabPromise instance added into page  for further use
     return newTabPromise;
   })
   .then(function (newTabPromise) {
-     page = newTabPromise;
+    page = newTabPromise;
     let pageWillbeOpenedPromise = newTabPromise.goto(loginLink);
     return pageWillbeOpenedPromise;
   })
   .then(function () {
-   let emailWillBeTypedPromise = page.type('input[id="input-1"]' , email , {delay : 10})
+    let emailWillBeTypedPromise = page.type('input[id="input-1"]', email, {
+      delay: 10,
+    });
 
-   return emailWillBeTypedPromise; 
-  }).then(()=>{
-    let passwordWillBeTypedPromise = page.type("input[id ='input-2']" , password , {delay : 10});
-    return passwordWillBeTypedPromise
-  }).then(() =>{
-    let rememberMeWillBeClickPromise = page.click('.checkbox-input'); 
-    return rememberMeWillBeClickPromise;
-  }).then(() =>{
-    let loginButtonWillClicked = page.click(
-      'button[data-analytics="LoginPassword"]' 
-    ); 
+    return emailWillBeTypedPromise;
   })
+  .then(() => {
+    let passwordWillBeTypedPromise = page.type(
+      "input[id ='input-2']",
+      password,
+      { delay: 10 }
+    );
+    return passwordWillBeTypedPromise;
+  })
+  .then(() => {
+    let rememberMeWillBeClickPromise = page.click(".checkbox-input");
+    return rememberMeWillBeClickPromise;
+  })
+  .then(() => {
+    let loginButtonWillClicked = page.click(
+      'button[data-analytics="LoginPassword"]'
+    );
+  });
 
-  console.log("after");
+console.log("after");
