@@ -24,12 +24,19 @@ browserWillbeLauncedPromise
     return pageWillbeOpenedPromise;
   })
   .then(function () {
-   let emailWillBeTypedPromise = page.type('input[id="input-1"]' , email , {delay : 200})
+   let emailWillBeTypedPromise = page.type('input[id="input-1"]' , email , {delay : 10})
 
    return emailWillBeTypedPromise; 
   }).then(()=>{
-    let passwordWillBeTypedPromise = page.type("input[id ='input-2']" , password , {delay : 150});
+    let passwordWillBeTypedPromise = page.type("input[id ='input-2']" , password , {delay : 10});
     return passwordWillBeTypedPromise
+  }).then(() =>{
+    let rememberMeWillBeClickPromise = page.click('.checkbox-input'); 
+    return rememberMeWillBeClickPromise;
+  }).then(() =>{
+    let loginButtonWillClicked = page.click(
+      'button[data-analytics="LoginPassword"]' 
+    ); 
   })
 
   console.log("after");
