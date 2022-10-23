@@ -47,7 +47,7 @@ browserWillbeLauncedPromise
   })
   .then(() => {
     // rember me marker clicked persented in page tab
-    let rememberMeWillBeClickPromise = page.click(".checkbox-input" {delay : 80});
+    let rememberMeWillBeClickPromise = page.click(".checkbox-input", {delay : 80});
     return rememberMeWillBeClickPromise;
   })
   .then(() => {
@@ -56,6 +56,38 @@ browserWillbeLauncedPromise
     let loginButtonWillClicked = page.click(
       'button[data-analytics="LoginPassword"]'
      , {delay : 50});
-  });
+     return loginButtonWillClicked
+  }).then(() =>{
+    // page tab instance is currently in hackerrank log in stage and when clicked on log in button this will load the page and take a time for goto next page
+    // therefore we need to wait for next promoise accomplishment untill html not laoded  main page of hackerrank website
+    // after loadding main page we will select algorithm(available in page instance) using selector  
+    // for that we using function waitAndclick and passing css selector of algorithm section in main page and current state (log in page) of page instance' 
+    let algoSecClickedPromise = waitAndClick('.topic-card>a[data-attr1="algorithms"]',page);
+    return algoSecClickedPromise
+  })
+
+
+
+
+// this function wait for html to load and select the target selector and click on it
+  function waitAndClick(selector , currentPage){
+    //  create a promise for wait and select  to a selector when html laoded in currentPage
+    return new Promise(function(resolve , reject){
+      // waitForSelector() method is provided by pupeeteer for wait unitll the currentPage html not matched target selector
+      let waitToLoadPromise = currentPage.waitForSelector(selector);
+      // once html loaded and selector matched then click on it
+      waitToLoadPromise
+        .then(function () {
+          let clickAfterLoad = currentPage.click(selector, { delay: 50 });
+          return clickAfterLoad;
+        })
+        .then(function () {
+          resolve();
+        })
+        .catch(function () {
+          reject();
+        });
+    })
+  }
 
 console.log("after");
