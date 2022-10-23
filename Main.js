@@ -64,6 +64,12 @@ browserWillbeLauncedPromise
     // for that we using function waitAndclick and passing css selector of algorithm section in main page and current state (log in page) of page instance' 
     let algoSecClickedPromise = waitAndClick('.topic-card>a[data-attr1="algorithms"]',page);
     return algoSecClickedPromise
+  }).then(function(){
+    // now page instanse in Main page of hacerrank and algorithm section is clicked and loading now we need to click on warm up check box inside of  algorithm section for loading time we using waitAndClick() function   
+    let warmUppWillBEClikedPromise = waitAndClick('input[value="warmup"]' , page);
+    return warmUpWillBeClikedPromise;
+  }).then(function(){
+    console.log('warmUpSectionClicked');
   })
 
 
@@ -78,7 +84,7 @@ browserWillbeLauncedPromise
       // once html loaded and selector matched then click on it
       waitToLoadPromise
         .then(function () {
-          let clickAfterLoad = currentPage.click(selector, { delay: 50 });
+          let clickAfterLoad = currentPage.click(selector, { delay: 100 });
           return clickAfterLoad;
         })
         .then(function () {
