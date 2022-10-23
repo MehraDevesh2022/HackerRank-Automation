@@ -1,5 +1,6 @@
 const puppeteer = require("puppeteer");
 const loginLink = "https://www.hackerrank.com/auth/login";
+const code = require("./code");
 // temprory email
 let email = "mefiv72384@abudat.com";
 // password
@@ -83,13 +84,22 @@ browserWillbeLauncedPromise
   })
   .then(function () {
     // now select all 9 question in warm up section from algrothim
+    // $$ is  method for selecting multiple values using selector and store in array formate
     let selectAllquestionPromise = page.$$(
       ".ui-btn.ui-btn-normal.primary-cta.ui-btn-line-primary.ui-btn-styled"
     );
+
     return selectAllquestionPromise;
   })
   .then(function (totalQuestions) {
-    console.log("all qus -->", totalQuestions.length);
+    let questionWillBeSolvedPromise = questionSolver(
+      page,
+      totalQuestions[0],
+      code.answers[0]
+    );
+
+    return questionWillBeSolvedPromise;
+    // return questionWillBeSolvedPromise
   });
 
 // this function wait for html to load and select the target selector and click on it
@@ -109,6 +119,28 @@ function waitAndClick(selector, currentPage) {
       })
       .catch(function () {
         reject();
+      });
+  });
+}
+
+function questionSolver(Page, question, answer) {
+  return new Promise(function (resolve, reject) {
+    let questionWillClickedPromise = question.click();
+    questionWillClickedPromise
+      .then(function () {
+        let customInputBoxClickedPromise = waitAndClick(
+          ".checkBoxWrapper .ui-checkbox.theme-m .label-wrap .checkbox-wrap",
+          page
+        );
+        return customInputBoxClickedPromise;
+      })
+      .then(function () {
+        let customInputBoxTypedPromise = page.type(
+          ".input.text-area.custominput.auto-width",
+          answer,
+          { delay: 200 }
+        );
+        return customInputBoxTypedPromise;
       });
   });
 }
