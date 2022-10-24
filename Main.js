@@ -165,7 +165,9 @@ function questionSolver(Page, question, answer) {
         }).then(function(){
           return page.waitForSelector('.submission-wrapper-next-entity-btn');
         }).then(function(){
-          return page.click()
+          resolve();
+        }).catch(function(err){
+          console.log(err);
         })
 
     })
