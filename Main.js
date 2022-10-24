@@ -99,7 +99,6 @@ browserWillbeLauncedPromise
     );
 
     return questionWillBeSolvedPromise;
-    // return questionWillBeSolvedPromise
   });
 
 // this function wait for html to load and select the target selector and click on it
@@ -124,25 +123,52 @@ function waitAndClick(selector, currentPage) {
 }
 
 function questionSolver(Page, question, answer) {
-  return new Promise(function (resolve, reject) {
-    let questionWillClickedPromise = question.click();
-    questionWillClickedPromise
-      .then(function () {
-        let customInputBoxClickedPromise = waitAndClick(
-          ".checkBoxWrapper .ui-checkbox.theme-m .label-wrap .checkbox-wrap",
-          page
-        );
-        return customInputBoxClickedPromise;
-      })
-      .then(function () {
-        let customInputBoxTypedPromise = page.type(
-          ".input.text-area.custominput.auto-width",
-          answer,
-          { delay: 200 }
-        );
-        return customInputBoxTypedPromise;
-      });
-  });
+    return new Promise(function (resolve, reject) {
+        let questionWillClickedPromise = question.click();
+        questionWillClickedPromise.then(function () {
+            let customInputBoxClickedPromise = waitAndClick(".checkBoxWrapper .ui-checkbox.theme-m .label-wrap .checkbox-wrap", page);
+            return customInputBoxClickedPromise;
+        }).then(function () {
+            return page.type(".input.text-area.custominput.auto-width", answer, { delay: 10 })
+        }).then(function () {
+            let ctrlIsPressedPromise = page.keyboard.down("Control");
+            return ctrlIsPressedPromise;
+        }).then(function () {
+            let AisPressedPromise = page.keyboard.press("A", { delay: 40 });
+            return AisPressedPromise;
+        }).then(function () {
+            let XisPressedPromise = page.keyboard.press("X");
+            return XisPressedPromise;
+        }).then(function () {
+            let ctrlKeyUpPromoise = page.keyboard.up("Control");
+            return ctrlKeyUpPromoise;
+        }).then(function () {
+            let eidtorSectionClickedPromise = waitAndClick(
+                ".hr-monaco-base-editor.showUnused .monaco-editor.no-user-select.vs", page);
+            return eidtorSectionClickedPromise;
+        }).then(function () {
+            let ctrlIsPressedPromise = page.keyboard.down("Control");
+            return ctrlIsPressedPromise;
+        }).then(function () {
+            let AisPressedPromise = page.keyboard.press("A", { delay: 40 });
+            return AisPressedPromise;
+        }).then(function () {
+            return page.keyboard.press('V', { delay: 100 })
+           
+        })
+        .then(function () {
+          return page.click('.hr-monaco__run-code');
+        }).then(function () {
+          return page.waitForSelector('.testcase-item');
+        }) .then(function(){
+          return page.click('.hr-monaco-submit' , {delay : 1000});
+        }).then(function(){
+          return page.waitForSelector('.submission-wrapper-next-entity-btn');
+        }).then(function(){
+          return page.click()
+        })
+
+    })
 }
 
 console.log("after");
