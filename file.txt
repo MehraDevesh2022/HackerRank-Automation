@@ -1,3 +1,0 @@
-pupteer suported by google
-pupteer prmoise base library
-puppteer can't access google . it used chromium open source browser provided by google

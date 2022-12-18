@@ -29,10 +29,10 @@ browserWillbeLauncedPromise
   })
   .then(function () {
     // email typeing promise used using page instance becuase inside of page hackerrank tab insatnce saved .
-    let emailWillBeTypedPromise = page.type('input[id="input-1"]', email, {
+    let emailWillBeTypedPromise = page.type(
+      'input[id="input-1"]',
       // input area selected using attriubute selector
-      delay: 100, // dealy for latter type
-    });
+      email, { delay: 100, }); // dealy for latter type
 
     return emailWillBeTypedPromise;
   })
@@ -92,6 +92,7 @@ browserWillbeLauncedPromise
     return selectAllquestionPromise;
   })
   .then(function (totalQuestions) {
+
     let questionWillBeSolvedPromise = questionSolver(
       page,
       totalQuestions[0],
