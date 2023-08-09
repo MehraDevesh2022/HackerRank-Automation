@@ -1,3 +1,4 @@
+// solutions
 module.exports = {
   answers: [
     `#include <bits/stdc++.h>

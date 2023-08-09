@@ -1,4 +1,4 @@
-const puppeteer = require("puppeteer");
+const puppeteer = require("puppeteer"); 
 const loginLink = "https://www.hackerrank.com/auth/login";
 const code = require("./code");
 // temprory email
@@ -174,4 +174,3 @@ function questionSolver(Page, question, answer) {
     })
 }
 
-console.log("after");
